@@ -1,11 +1,15 @@
 from unstructured.partition.pdf import partition_pdf
 from unstructured.chunking.title import chunk_by_title
-from langchain_openai import ChatOpenAI
+from langchain_core.documents import Document
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_chroma import Chroma
 from typing import List
 import json
-from langchain.schema import Document, HumanMessage, SystemMessage
+from dotenv import load_dotenv
+load_dotenv()
 
-def partition_pdf(file_path: str):
+def partition(file_path: str):
     elements = partition_pdf(
         filename=file_path,
         strategy="hi_res",
@@ -15,7 +19,7 @@ def partition_pdf(file_path: str):
     )
     return elements
 
-def chunk_by_title(elements):
+def chunk(elements):
     chunks = chunk_by_title(
         elements=elements, 
         max_characters=3000, 
@@ -93,7 +97,7 @@ def create_summary(text: str, tables: List[str], images: List[str]) -> str:
         return text
 
 
-def create_summarized_documents(chunks: List[Chunk]):
+def create_summarized_documents(chunks):
 
     langchain_docs = []
      
@@ -102,7 +106,7 @@ def create_summarized_documents(chunks: List[Chunk]):
         content_data = separate_content_types(chunk)
         
         if content_data['tables'] or content_data['images']:
-            enhanced_content = create_ai_enhanced_summary(
+            enhanced_content = create_summary(
                 content_data['text'],
                 content_data['tables'],
                 content_data['images']
@@ -138,8 +142,8 @@ def create_vector_db(docs: List[Document], db_path: str = "db/chroma_db"):
 
 def ingestion_pipeline(file_path: str):
     print(f"Ingesting {file_path}...")
-    elements = partition_pdf(file_path)
-    chunks = chunk_by_title(elements)
+    elements = partition(file_path)
+    chunks = chunk(elements)
     docs = create_summarized_documents(chunks)
     vector_db = create_vector_db(docs)
     print("Ingestion complete!")
