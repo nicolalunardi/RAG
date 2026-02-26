@@ -154,10 +154,16 @@ def ingestion_pipeline(file_paths: List[str]):
     print(f"Ingestion complete! {len(all_docs)} total documents stored.")
     return vector_db
 
-def retrieve_documents(query: str, k: int = 5):
+def retrieve_documents(query: str, k: int = 5, verbose: bool = False):
     embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
     vector_db = Chroma(persist_directory="db/chroma_db", embedding_function=embedding_model)
     retrieved_docs = vector_db.similarity_search(query, k=k)
+    
+    if verbose:
+        print(f"\nTop {len(retrieved_docs)} documents retrieved:\n")
+        for i, doc in enumerate(retrieved_docs):
+            print(f"  [{i+1}] {doc.page_content[:150]}...\n")
+    
     return retrieved_docs
 
 def generate_response(query: str, retrieved_docs: List[Document]):
