@@ -50,7 +50,6 @@ def create_summary(text: str, tables: List[str], images: List[str]) -> str:
     try:
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
         
-        # System message con le istruzioni
         system = SystemMessage(content="""YOUR TASK:
             Generate a comprehensive, searchable description that covers:
 
