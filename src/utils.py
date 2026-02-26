@@ -1,5 +1,7 @@
 from unstructured.partition.pdf import partition_pdf
 from unstructured.chunking.title import chunk_by_title
+from langchain_openai import ChatOpenAI
+from typing import List
 
 def partition_pdf(file_path: str):
     elements = partition_pdf(
@@ -24,7 +26,6 @@ def separate_content_types(chunk):
         'text': chunk.text,
         'tables': [],
         'images': [],
-        'types': ['text']
     }
     
     # Check for tables and images in original elements
@@ -34,19 +35,65 @@ def separate_content_types(chunk):
             
             # Handle tables
             if element_type == 'Table':
-                content_data['types'].append('table')
                 table_html = getattr(element.metadata, 'text_as_html', element.text)
                 content_data['tables'].append(table_html)
             
             # Handle images
             elif element_type == 'Image':
                 if hasattr(element, 'metadata') and hasattr(element.metadata, 'image_base64'):
-                    content_data['types'].append('image')
                     content_data['images'].append(element.metadata.image_base64)
     
-    content_data['types'] = list(set(content_data['types']))
     return content_data
+
+def create_summary(text: str, tables: List[str], images: List[str]) -> str:
     
+    try:
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        
+        # System message con le istruzioni
+        system = SystemMessage(content="""YOUR TASK:
+            Generate a comprehensive, searchable description that covers:
+
+            1. Key facts, numbers, and data points from text and tables
+            2. Main topics and concepts discussed  
+            3. Questions this content could answer
+            4. Visual content analysis (charts, diagrams, patterns in images)
+            5. Alternative search terms users might use
+
+            Make it detailed and searchable - prioritize findability over brevity.
+
+            SEARCHABLE DESCRIPTION:""")
+
+        prompt_text = f"""You are creating a searchable description for document content retrieval.
+
+        CONTENT TO ANALYZE:
+        TEXT CONTENT:
+        {text}
+        """
+        if tables:
+            prompt_text += "TABLES:\n"
+            for i, table in enumerate(tables):
+                prompt_text += f"Table {i+1}:\n{table}\n\n"
+
+        message_content = [{"type": "text", "text": prompt_text}]
+
+        for image_base64 in images:
+            message_content.append({
+                "type": "image_url",
+                "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}
+            })
+        
+        message = HumanMessage(content=message_content)
+        response = llm.invoke([system, message])  # ← system prima, human dopo
+        
+        return response.content
+    except Exception as e:
+        print(f"Error creating summary: {str(e)}")
+        return None
+
+
+
+
 
     
     
