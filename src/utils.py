@@ -124,6 +124,14 @@ def create_summarized_documents(chunks: List[Chunk]):
     
     return langchain_docs
 
+def create_vector_db(docs: List[Document], db_path: str = "db/chroma_db"):
 
+    embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
+
+    vector_db = Chroma.from_documents(
+        docs, 
+        embedding=embedding_model,
+        persist_directory=db_path, 
+        collection_metadata={"hnsw:space": "cosine"})
     
-    
+    return vector_db
