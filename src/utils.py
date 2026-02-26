@@ -140,11 +140,16 @@ def create_vector_db(docs: List[Document], db_path: str = "db/chroma_db"):
     
     return vector_db
 
-def ingestion_pipeline(file_path: str):
-    print(f"Ingesting {file_path}...")
-    elements = partition(file_path)
-    chunks = chunk(elements)
-    docs = create_summarized_documents(chunks)
-    vector_db = create_vector_db(docs)
-    print("Ingestion complete!")
+def ingestion_pipeline(file_paths: List[str]):
+    all_docs = []
+    for file_path in file_paths:
+        print(f"Ingesting {file_path}...")
+        elements = partition(file_path)
+        chunks = chunk(elements)
+        docs = create_summarized_documents(chunks)
+        all_docs.extend(docs)
+        print(f"  → {len(docs)} documents extracted")
+    
+    vector_db = create_vector_db(all_docs)
+    print(f"Ingestion complete! {len(all_docs)} total documents stored.")
     return vector_db
