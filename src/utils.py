@@ -135,3 +135,12 @@ def create_vector_db(docs: List[Document], db_path: str = "db/chroma_db"):
         collection_metadata={"hnsw:space": "cosine"})
     
     return vector_db
+
+def ingestion_pipeline(file_path: str):
+    print(f"Ingesting {file_path}...")
+    elements = partition_pdf(file_path)
+    chunks = chunk_by_title(elements)
+    docs = create_summarized_documents(chunks)
+    vector_db = create_vector_db(docs)
+    print("Ingestion complete!")
+    return vector_db
