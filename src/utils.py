@@ -5,9 +5,12 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_chroma import Chroma
 from typing import List
+import os
 import json
 from dotenv import load_dotenv
 load_dotenv()
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def partition(file_path: str):
     elements = partition_pdf(
@@ -23,7 +26,7 @@ def chunk(elements):
     chunks = chunk_by_title(
         elements=elements, 
         max_characters=3000, 
-        combine_under_n_chars=500
+        combine_text_under_n_chars=500
     )
     return chunks
 
@@ -128,7 +131,7 @@ def create_summarized_documents(chunks):
     
     return langchain_docs
 
-def create_vector_db(docs: List[Document], db_path: str = "db/chroma_db"):
+def create_vector_db(docs: List[Document], db_path: str = os.path.join(BASE_DIR, "db/chroma_db")):
 
     embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
 
@@ -156,7 +159,7 @@ def ingestion_pipeline(file_paths: List[str]):
 
 def retrieve_documents(query: str, k: int = 5, verbose: bool = False):
     embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
-    vector_db = Chroma(persist_directory="db/chroma_db", embedding_function=embedding_model)
+    vector_db = Chroma(persist_directory=os.path.join(BASE_DIR, "db/chroma_db"), embedding_function=embedding_model)
     retrieved_docs = vector_db.similarity_search(query, k=k)
     
     if verbose:
