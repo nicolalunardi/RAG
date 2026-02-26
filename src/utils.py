@@ -153,3 +153,39 @@ def ingestion_pipeline(file_paths: List[str]):
     vector_db = create_vector_db(all_docs)
     print(f"Ingestion complete! {len(all_docs)} total documents stored.")
     return vector_db
+
+def retrieve_documents(query: str, k: int = 5):
+    embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
+    vector_db = Chroma(persist_directory="db/chroma_db", embedding_function=embedding_model)
+    retrieved_docs = vector_db.similarity_search(query, k=k)
+    return retrieved_docs
+
+def generate_response(query: str, retrieved_docs: List[Document]):
+    
+    try:
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        
+        system = SystemMessage(content="""You are a helpful assistant. 
+            Answer questions based ONLY on the provided documents. 
+            If the answer is not found in the documents, say so clearly.
+            Do not make up information that is not supported by the documents.""")
+        
+        prompt_text = f"""Based on the following documents, please answer this question: {query}
+
+        DOCUMENTS:
+            """
+        
+        for i, doc in enumerate(retrieved_docs):
+            prompt_text += f"""
+            DOCUMENT {i+1}:
+            {doc.page_content}
+            """
+        
+        message = HumanMessage(content=prompt_text)
+        response = llm.invoke([system, message])
+        
+        return response.content
+    except Exception as e:
+        print(f"Error generating response: {str(e)}")
+        return "Error: Could not generate response."    
+
