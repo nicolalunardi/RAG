@@ -107,16 +107,32 @@ Enter your query: What are the conditions for legitimate interest under GDPR?
 
 Top 5 documents retrieved:
 
-  [1] The controller must carry out a balancing test to ensure...
-  [2] Legitimate interest requires three cumulative conditions...
-  ...
+  [1] in order to sue that person for damages, protecting the property,
+      health and life of the co-owners of a building, product improvement...
+  [2] "Legitimate" nature of the interest pursued by the controller or
+      by a third party. The concept of "interest" is closely related to...
+  [3] For example, the CJEU found that the following interest of a third
+      party is, in principle, likely to constitute a legitimate interest...
+  [4] A newspaper envisages to create a database consisting of former
+      subscribers who have not renewed their subscription...
+  [5] General public interest or third party's interest. Interests of
+      third parties, as mentioned in Article 6(1)(f) GDPR...
 
 Answer:
-According to the retrieved documents, legitimate interest under the GDPR
-requires three cumulative conditions: (1) the pursuit of a legitimate interest
-by the controller or a third party, (2) the necessity of processing for that
-purpose, and (3) that the interests or rights of the data subject do not
-override the legitimate interest pursued.
+The conditions for legitimate interest under GDPR, specifically Article
+6(1)(f), are as follows:
+
+1. Lawfulness: The interest must be lawful, meaning it should not be
+   contrary to EU or Member State law.
+2. Clear Articulation: The interest must be clearly and precisely
+   articulated to ensure it can be balanced against the interests or
+   fundamental rights and freedoms of the data subject.
+3. Real and Present: The interest must be real and present, not
+   speculative. It must be effective at the time of data processing
+   and not hypothetical.
+
+These criteria must be cumulatively met for an interest to be considered
+legitimate under GDPR.
 ```
 
 ## Possible Improvements
