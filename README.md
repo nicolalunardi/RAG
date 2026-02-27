@@ -1,8 +1,8 @@
-# 📄 RAG Pipeline — Multimodal Document Q&A
+# RAG Pipeline — Multimodal Document Q&A
 
 A **Retrieval-Augmented Generation** pipeline that ingests PDF documents containing text, tables, and images, and enables natural language question answering over their content using OpenAI LLMs.
 
-## ✨ Features
+## Features
 
 - **Multimodal ingestion** — processes text, HTML tables, and images from PDFs
 - **Intelligent chunking** — splits documents by semantic sections (titles/headings)
@@ -10,7 +10,7 @@ A **Retrieval-Augmented Generation** pipeline that ingests PDF documents contain
 - **Vector search** — stores embeddings in ChromaDB for fast cosine similarity retrieval
 - **Grounded answers** — generates responses strictly based on retrieved documents
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart LR
@@ -26,7 +26,7 @@ flowchart LR
     I --> J[GPT-4o-mini\nResponse Generation]
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |---|---|
@@ -36,7 +36,7 @@ flowchart LR
 | Embeddings | OpenAI `text-embedding-3-small` |
 | LLM | OpenAI `gpt-4o-mini` |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Rag_project/
@@ -51,7 +51,7 @@ Rag_project/
 └── README.md
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -119,7 +119,7 @@ purpose, and (3) that the interests or rights of the data subject do not
 override the legitimate interest pursued.
 ```
 
-## 📌 Possible Improvements
+## Possible Improvements
 
 - [ ] Add evaluation metrics (e.g. faithfulness, relevance) with [RAGAS](https://docs.ragas.io/)
 - [ ] Support additional file formats (DOCX, HTML, Markdown)
