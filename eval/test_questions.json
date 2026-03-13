@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What are the conditions for legitimate interest under GDPR?",
+    "ground_truth": "Under Article 6(1)(f) GDPR, three conditions must be cumulatively met for legitimate interest: (1) the interest must be lawful, meaning not contrary to EU or Member State law; (2) the interest must be clearly and precisely articulated to allow balancing against data subject rights; (3) the interest must be real and present, not speculative or hypothetical, and must be effective at the time of data processing."
+  },
+  {
+    "question": "What is the right of access under GDPR and what information must be provided?",
+    "ground_truth": "The right of access under Article 15 GDPR allows data subjects to obtain confirmation of whether their personal data is being processed and, if so, access to the data along with information including: the purposes of processing, the categories of personal data, the recipients or categories of recipients, the storage period, the existence of the right to rectification or erasure, the right to lodge a complaint, and information about the source of the data."
+  },
+  {
+    "question": "What are the obligations of a controller when a personal data breach occurs?",
+    "ground_truth": "Under GDPR, when a personal data breach occurs, the controller must: (1) notify the competent supervisory authority without undue delay and, where feasible, within 72 hours of becoming aware of the breach, unless the breach is unlikely to result in a risk to the rights and freedoms of natural persons; (2) document the breach including facts, effects, and remedial measures taken; (3) if the breach is likely to result in a high risk to the rights and freedoms of individuals, communicate the breach to the affected data subjects without undue delay."
+  },
+  {
+    "question": "When can a controller refuse a data subject's access request?",
+    "ground_truth": "A controller may refuse a data subject's access request when requests are manifestly unfounded or excessive, particularly if they are repetitive. The controller may charge a reasonable fee or refuse to act on the request. The controller bears the burden of demonstrating that the request is manifestly unfounded or excessive. Restrictions to the right of access may also be provided under Article 23 GDPR."
+  },
+  {
+    "question": "How should the balancing test for legitimate interest be conducted?",
+    "ground_truth": "The balancing test requires weighing the legitimate interest of the controller or third party against the interests, fundamental rights, and freedoms of the data subject. It involves assessing: the nature and source of the legitimate interest, the impact of the processing on the data subject, the reasonable expectations of the data subject, and the additional safeguards that could limit undue impact. The controller must consider whether the data subject could reasonably expect the processing to take place."
+  },
+  {
+    "question": "What is the difference between notifying the supervisory authority and communicating to data subjects about a breach?",
+    "ground_truth": "Notification to the supervisory authority under Article 33 GDPR is required for all breaches unless they are unlikely to result in a risk to rights and freedoms, and must be done within 72 hours. Communication to data subjects under Article 34 GDPR is only required when the breach is likely to result in a high risk to their rights and freedoms, and must be done without undue delay. The communication must describe in clear language the nature of the breach and the measures taken."
+  }
+]
