@@ -8,6 +8,7 @@ from typing import List
 import os
 import json
 from dotenv import load_dotenv
+
 load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -198,3 +199,9 @@ def generate_response(query: str, retrieved_docs: List[Document]):
         print(f"Error generating response: {str(e)}")
         return "Error: Could not generate response."    
 
+
+def get_answer_and_contexts(query: str):
+    retrieved_docs = retrieve_documents(query, k=5, verbose=False)
+    answer = generate_response(query, retrieved_docs)
+    contexts = [doc.page_content for doc in retrieved_docs]
+    return answer, contexts

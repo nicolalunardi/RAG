@@ -3,6 +3,7 @@ from pathlib import Path
 from datasets import Dataset
 from ragas.metrics import faithfulness, answer_relevancy, context_recall
 from ragas import evaluate
+from utils import get_answer_and_contexts
 
 def load_test_dataset(path: Path) -> list[dict]:
     with open(path, "r", encoding="utf-8") as f:
